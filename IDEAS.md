@@ -1,4 +1,4 @@
-# Main EthosTools.ai -> Tehegram Supplemental Information and Ideas
+# Main EthosTools.ai -> Telegram Supplemental Information and Ideas
 
 thoughts about other things for other modules
 

@@ -1,12 +1,12 @@
 # EthosFederationList
 
-EthoseFederation is a method for Ethos Agents to with with a Telegram bot named Rose (@missrosebot) and the Federation Management module that it provides.   
+## EthosFederationList Overview
+EthosFederation is a supplemental tool which is part of the Telegram module on Ethostools.ai, to provide a web interface for users to work with and manage a Telegram Rose Federation Ban List.  There should be main components on the screen.  A visualizer for the data inside of a database that neatly displays the contents of a Telegram Federation list of banned users which was imported into it.  There should be a section to monitor the Federation Logging channel which is resizesable.  There are other tasks, which are detailed below, that should be arranged on the screen for the user to be able to see and use.  
+
+This is meant to be a self contained module that works with managing a Federation Ban List but the data in the databases can be queried and used for forensics by other parts of the ethostools.ai suite.  
 
 
-
-### EthosFederationList Described and Envisioned
-
-# Prerequisite Information Needed
+## Prerequisite Information Needed
 This project will require some information before it can be started and become functional.  This information, upon the first run of the application, will prompt the user for the following (notice the labels in parens at the end of each item so that I can reference them later in this doc) and should be stored in a long term database:
 - Channel ID For The Federation Logging (logging)
 - Channel ID For Issuing Authorized Federation Bot Commands (auth)
@@ -17,7 +17,7 @@ This project will require some information before it can be started and become f
 
 This EthosFederationList project should be its own web based module that opens up and is meant to manage a Telegram Rose Bot Federation List and should start up with the information gathered from the prerequisite section above.  Now that we are able to talk to Telegram, our channels, our bots, and know the Federation hash then the next step will be to import the Federation Ban list Data Into the EthosFederationList project by exporting it from Telegram.  This should be done from the EthosFederationList UI module by pressing a `EXPORT` key.  First, we need to have a long term database created that can store this information shown below.  Keeping in mind that at this writing we have about ten thousandd bans (or database records) to be created but we need to make sure that this database persists, is free and reliable, and can potentially hold hundreds of thousands of records.  
 
-# Federation Ban List Database Creation / Information
+## Federation Ban List Database Creation / Information
 The Federation Ban List should be stored into a long term database.  On the first run of this application, there won't be a database set up yet for this so on the first export then a database should be created.  Each banned UserID will be a record in the database.  Each record should contain 6 fields.  Those fields within each record are as follows:
 - 1st field, UID - call it `uid` (numeric UID of banned account)
 - 2nd field, First Name - call it `firstname` (string: can contain emoji, cyrillic, etc) (can be empty in most cases - replace NULL with BLANK as field data if the field is empty)
@@ -28,14 +28,14 @@ The Federation Ban List should be stored into a long term database.  On the firs
   - It is vital to know that this field will only be filled in by the (botmon) account observing the (logging) channel and parsing the messages that Rose will post when Federation Bans occur.
   - It is vital to know that the exported Federation Ban lists will not contain this field within the CSV file but should still be created (and N/A stored as the value) for future use after the (botmon) goes live.
 
-# First Run Only Operations
+## First Run Only Operations
 Once this blank database is created as part of the first run, then we need to add the Federation ban list data into it.  The user should be prompted with:
 - Point to a Federation Banlist CSV file on your local computer and upload it (meaning you downloaded it yourself and have it locally on your system)
   - This will then ensure the filename is created, stored, and saved properly (methods are shown in the next section: *Exporting and Sorting Federation Data Snapshot Files*)  
 - Once the initial CSV file has been uploaded to the system, then the user will be prompted to `IMPORT` the data into the database detailed above.
   - Instructions for this will be in a below section called:  *Import A Federation Banlist From A CSV File Snapshot*
 
-# Exporting and Storing Federation Data Snapshot Files
+## Exporting and Storing Federation Data Snapshot Files
 - **it is critical to remember that only the Federation Owner can issue the import / export commands to and from a Federation.** If a Federation Admin attempts to run the import/export commands, they will receive an error message from Rose that they must be the channel owner.
 - **It is critical to remember that each time a Federation Banlist is exported, it will be renamed and saved in the folder tree below for one year.**
 - **It is important to remember that all of the downloaded exports can be used as `RESTORE POINTS` if something bad happens to the Federation list.**
@@ -54,10 +54,10 @@ Once this blank database is created as part of the first run, then we need to ad
     - **Example of archived export filename:** 05122025-1605-fbanned_users.csv
     - **Example of path to newly named export file:** FederationExports/19e4d335-50df-43dc-9e89-42afb9456613/05122025-1605-fbanned_users.csv
     
-# Providing A Local Export CSV File Option
+## Providing A Local Export CSV File Option
 - There should be an area where a locally stored export file can be chosen to be loaded instead of having to click the EXPORT button.  Doing this will upload the local CSV file into the file folder containing all of the snapshots.
 
-# Import A Federation Banlist From A CSV File Snapshot
+## Import A Federation Banlist From A CSV File Snapshot
 There should also in the UI be a button that says `IMPORT` and when clicking that, a GUI interface opens up showing all of the saved CSV snapshots that we have stored.  Then, the user should be able to select the file that they want to use to populate the database.  Once the user selects the file they want to import in from out list of neatly named files, they should be prompted one last time asking if they are sure they wish to proceed.
 
 Once they confirm, then the contents of this CSV file should be imported into our database structure mentioned above.
@@ -70,21 +70,21 @@ Now the user can `BROWSE` our database using a visualizer that allows them to sc
 
 Once the user has imported a successful snapshot CSV file, they then should have a button show up that they can press now called `PUBLISH`  The next section details these actions.
 
-# Publishing A New Federation List
+## Publishing A New Federation List
 This section goes into the ways needed to effectively push out a new version of the ban list up to your Telegram Rose Federation and activate it into Production.
 
-## Reasons To Manually Publish
+### Reasons To Manually Publish
 - If you have made manual changes within the GUI tool to the records in the database on the EthosFederationList GYI tool.  (Such as reformatting information in a field on all records, etc)
 - If you need to restore back to a previous date for some strange reason (I have never had to do this before)
 
-## Instructions To Publish (or import) A New CSV Into Rose Federation
+### Instructions To Publish (or import) A New CSV Into Rose Federation
 This is an operation that the bot (botapi) will perform.  In the Telegram Desktop when a human does this, it is a two step process shown below:
 - A Copy of the new csv file is uploaded into the (auth) channel
 - A message is then sent in REPLY to the csv file just sent saying `/fedimport overwrite`
   - Once this command is sent, Rose will then use this to overwrite values in the Federation with the provided CSV file and changes are live instantly
 
 
-# Bot Monitoring Federation Log Channel
+## Bot Monitoring Federation Log Channel
 We want to have a bot (botmon) idling in the Federation Log Channel (logging).  
 
 This (botmon) should:
@@ -92,19 +92,19 @@ This (botmon) should:
 - The intent is to have this be a ongoing data stream which could appear in a window section on the EthosFederationList user interface in a resizable window.
   - The want is to be able to be attached to this bot and all of the new FedBans that are added during the day by humans will scroll in this window as an almost real time view.  If it is easier for buffering this data then do it that way.  
 
-# Batch Adding Federation Ban IDs
+## Batch Adding Federation Ban IDs
 There are times when a new list of user IDs are gathered and need to be added into the federation ban list.  We want this to be a section in the GUI on the page and a button to press that says `BATCH ADD`.  This will allow the user make a choice how to add IDs to ban.
 
-## Providing the list of IDs to add to the Federation Ban List
+### Providing the list of IDs to add to the Federation Ban List
 - One way is to take a screenshot of a bunch of UID numbers.  The system should then be able to OCR the ID numbers from this picture and created a list of IDs to be banned.
 - Another way is to put a list of IDs into a field with commas in between each ID number, or, the user can paste a list of IDs with one ID per line.
 
-## Providing a Reason For The FBAN
+### Providing a Reason For The FBAN
 - The user can choose to provide a reason for the block of IDs that will be added into the Federation Ban List.  This will be done by typing in a reason into a field which will be set into the `reason` field for these new records.  The user can also choose not to give a reason and pick from a list of "frequent reasons".  This list of frequent reasons should be configurable by the user through a small utility where they can set up canned reasons to be selected if they choose not to type out a reason.
 
 The end result is now that our tool has a list of IDs that now need to be added into the Federation in real time.  This will be completed by our bot (auth).  
 
-## Instantiating the Federation Bans
+### Instantiating the Federation Bans
 Our (botapi) API bot will then already be idling in our Command issuing channel (auth) and will then construct commands to send to the (auth) channel.  It will go through the list of IDs that have been batch requested and it will issue the correct command to create the new FBAN.  
 - Example:
   - We have 5 IDs to batch add (6005000000, 5023400000, 5567852300, 5023783700, 2000300600)
@@ -117,10 +117,10 @@ Our (botapi) API bot will then already be idling in our Command issuing channel 
    
 - All batch additions should be logged in the system recording what user executed the batch, what was added into the batch, the reason, date, and time.
 
-# Rose Federation Documentation and Commands
+## Rose Federation Documentation and Commands
 In order to show our Agents what commands are available to users related to Federations, the relevant commands below are broken down into two main sections.  Almost all of the commands that EthosFederationList will send to our bots in Telegram will be from the Owner Commands below.
 
-## Section 1 - Federation Owner Commands
+### Section 1 - Federation Owner Commands
 
 These are the list of available fed owner commands. To run these, you have to own the current federation.
 
@@ -142,7 +142,7 @@ Note: This does not affect your banlist. You just inherit any bans.
 - /unsetfedlog: Unset the federation log. Events will no longer be logged.
 - /setfedlang: Change the language of the federation log. Note: This does not change the language of Rose's replies to fed commands, only the log channel.
 
-## Section 2 - Fed Admin Commands
+### Section 2 - Fed Admin Commands
 
 The following is the list of all fed admin commands. To run these, you have to be a federation admin in the current federation.
 

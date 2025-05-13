@@ -106,7 +106,10 @@ The end result is now that our tool has a list of IDs that now need to be added 
 
 ### Instantiating the Federation Bans
 Our (botapi) API bot will then already be idling (always listening) in our Command issuing channel (auth) and will issue the commands to send to the (auth) channel to set the new Federation Bans.  It will iterate through the list of IDs that have been batch requested and it will issue the correct command to create the new FBAN.  
-- Example:
+
+**This procedure of performing FBANs via a Telegram bot (botapi) should be created in a way that it can be called by other modules from different programs.**
+
+- Example: 
   - We have 5 IDs to batch add (6005000000, 5023400000, 5567852300, 5023783700, 2000300600)
   - The API Bot (botapi) would issue five separate commands with a 2 second delay in between each ID, example:
     - /fban 6005000000 05122025|BATCH|`REASON`

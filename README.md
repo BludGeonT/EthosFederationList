@@ -1,7 +1,7 @@
 # EthosFederationList
 
 ## EthosFederationList Overview
-EthosFederation is a supplemental tool which is part of the Telegram module on Ethostools.ai, to provide a web interface for users to work with and manage a Telegram Rose Federation Ban List.  There should be main components on the screen.  A visualizer for the data inside of a database that neatly displays the contents of a Telegram Federation list of banned users which was imported into it.  There should be a section to monitor the Federation Logging channel which is resizesable.  There are other tasks, which are detailed below, that should be arranged on the screen for the user to be able to see and use.  
+EthosFederation is a supplemental tool which is part of the Telegram module on Ethostools.ai, to provide a web interface for users to work with and manage a Telegram Rose Federation Ban List.  There should be main components on the screen.  A visualizer for the data inside of a database that neatly displays the contents of a Telegram Federation list of banned users which was imported into it.  There should be a section to monitor the Federation Logging channel which is resizesable.  There are other tasks, which are detailed below, that should be arranged on the screen for the user to be able to see and use.  There should also be an audit section that allows the user to see who did what on this web utility.
 
 This is meant to be a self contained module that works with managing a Federation Ban List but the data in the databases can be queried and used for forensics by other parts of the ethostools.ai suite.  
 
@@ -100,12 +100,12 @@ There are times when a new list of user IDs are gathered and need to be added in
 - Another way is to put a list of IDs into a field with commas in between each ID number, or, the user can paste a list of IDs with one ID per line.
 
 ### Providing a Reason For The FBAN
-- The user can choose to provide a reason for the block of IDs that will be added into the Federation Ban List.  This will be done by typing in a reason into a field which will be set into the `reason` field for these new records.  The user can also choose not to give a reason and pick from a list of "frequent reasons".  This list of frequent reasons should be configurable by the user through a small utility where they can set up canned reasons to be selected if they choose not to type out a reason.
+- The user can choose to provide a reason for the block of IDs that will be added into the Federation Ban List.  This will be done by typing in a reason into a field which will be set into the `reason` field for these new records.  The user can also choose not to give a reason and pick from a list of "frequent reasons".  This list of frequent reasons should be configurable by the user through a small utility where they can set up canned reasons to be selected if they choose not to type out a reason.  These reasons will be appended to the commands used to initiate the Federation Bans by our bot.
 
 The end result is now that our tool has a list of IDs that now need to be added into the Federation in real time.  This will be completed by our bot (auth).  
 
 ### Instantiating the Federation Bans
-Our (botapi) API bot will then already be idling in our Command issuing channel (auth) and will then construct commands to send to the (auth) channel.  It will go through the list of IDs that have been batch requested and it will issue the correct command to create the new FBAN.  
+Our (botapi) API bot will then already be idling (always listening) in our Command issuing channel (auth) and will issue the commands to send to the (auth) channel to set the new Federation Bans.  It will iterate through the list of IDs that have been batch requested and it will issue the correct command to create the new FBAN.  
 - Example:
   - We have 5 IDs to batch add (6005000000, 5023400000, 5567852300, 5023783700, 2000300600)
   - The API Bot (botapi) would issue five separate commands with a 2 second delay in between each ID, example:
@@ -114,11 +114,12 @@ Our (botapi) API bot will then already be idling in our Command issuing channel 
     - /fban 5567852300 05122025|BATCH|`REASON`
     - /fban 5023783700 05122025|BATCH|`REASON`
     - /fban 2000300600 05122025|BATCH|`REASON`
+      - Notice the space delimiter and notice the 3rd field.  The third field will be constructed of the date followed by a | symbol, the word BATCH followed by a | symbol, and then the `REASON` that the user typed in on the batch creation dialog (or the reason they selected from canned reasons).
    
-- All batch additions should be logged in the system recording what user executed the batch, what was added into the batch, the reason, date, and time.
+- All batch additions should be logged in the system recording auditlog with what user executed the batch, what was added into the batch, the reason, date, and time.
 
 ## Rose Federation Documentation and Commands
-In order to show our Agents what commands are available to users related to Federations, the relevant commands below are broken down into two main sections.  Almost all of the commands that EthosFederationList will send to our bots in Telegram will be from the Owner Commands below.
+In order to show our Agents what commands are available to users related to Federations, the relevant commands below are broken down into two main sections.  Almost all of the commands that EthosFederationList will send to our bots in Telegram will be from the Owner Commands below.  We might use more of these commands in the future as this project grows but just providing this for context and documentation and learning.
 
 ### Section 1 - Federation Owner Commands
 

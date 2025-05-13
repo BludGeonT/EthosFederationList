@@ -47,7 +47,7 @@ Once this blank database is created as part of the first run, then we need to ad
 - When the user clicks `EXPORT`, then the (botapi) bot will send a command to the (auth) Channel
   - Command to send: `/fedexport`
     - This will let Rose know to export the Federation Ban List from (fedhash) in a CSV formatted document.  The (botapi) bot should be waiting for a reply from Rose in the same channel which will contain a link to download `fbanned_users.csv` which it should then download.
-    - Once the `fbanned_users.cvs` is downloaded, it needs to be stored in a folder structure of something like FederationExports/(fedhash)/FILENAME where its new FILENAME becomes formatted as the following:
+    - Once the `fbanned_users.csv` is downloaded, it needs to be stored in a folder structure of something like FederationExports/(fedhash)/FILENAME where its new FILENAME becomes formatted as the following:
       - Date in the format of 05122025
       - Time in the format of 1605
       - Body in the format of fbanned_users.csv
@@ -57,7 +57,7 @@ Once this blank database is created as part of the first run, then we need to ad
 # Providing A Local Export CSV File Option
 - There should be an area where a locally stored export file can be chosen to be loaded instead of having to click the EXPORT button.  Doing this will upload the local CSV file into the file folder containing all of the snapshots.
 
-# Import A Fenderation Banlist From A CSV File Snapshot
+# Import A Federation Banlist From A CSV File Snapshot
 There should also in the UI be a button that says `IMPORT` and when clicking that, a GUI interface opens up showing all of the saved CSV snapshots that we have stored.  Then, the user should be able to select the file that they want to use to populate the database.  Once the user selects the file they want to import in from out list of neatly named files, they should be prompted one last time asking if they are sure they wish to proceed.
 
 Once they confirm, then the contents of this CSV file should be imported into our database structure mentioned above.
@@ -92,7 +92,30 @@ This (botmon) should:
 - The intent is to have this be a ongoing data stream which could appear in a window section on the EthosFederationList user interface in a resizable window.
   - The want is to be able to be attached to this bot and all of the new FedBans that are added during the day by humans will scroll in this window as an almost real time view.  If it is easier for buffering this data then do it that way.  
 
+# Batch Adding Federation Ban IDs
+There are times when a new list of user IDs are gathered and need to be added into the federation ban list.  We want this to be a section in the GUI on the page and a button to press that says `BATCH ADD`.  This will allow the user make a choice how to add IDs to ban.
 
+## Providing the list of IDs to add to the Federation Ban List
+- One way is to take a screenshot of a bunch of UID numbers.  The system should then be able to OCR the ID numbers from this picture and created a list of IDs to be banned.
+- Another way is to put a list of IDs into a field with commas in between each ID number, or, the user can paste a list of IDs with one ID per line.
+
+## Providing a Reason For The FBAN
+- The user can choose to provide a reason for the block of IDs that will be added into the Federation Ban List.  This will be done by typing in a reason into a field which will be set into the `reason` field for these new records.  The user can also choose not to give a reason and pick from a list of "frequent reasons".  This list of frequent reasons should be configurable by the user through a small utility where they can set up canned reasons to be selected if they choose not to type out a reason.
+
+The end result is now that our tool has a list of IDs that now need to be added into the Federation in real time.  This will be completed by our bot (auth).  
+
+## Instantiating the Federation Bans
+Our (botapi) API bot will then already be idling in our Command issuing channel (auth) and will then construct commands to send to the (auth) channel.  It will go through the list of IDs that have been batch requested and it will issue the correct command to create the new FBAN.  
+- Example:
+  - We have 5 IDs to batch add (6005000000, 5023400000, 5567852300, 5023783700, 2000300600)
+  - The API Bot (botapi) would issue five separate commands with a 2 second delay in between each ID, example:
+    - /fban 6005000000 05122025|BATCH|`REASON`
+    - /fban 5023400000 05122025|BATCH|`REASON`
+    - /fban 5567852300 05122025|BATCH|`REASON`
+    - /fban 5023783700 05122025|BATCH|`REASON`
+    - /fban 2000300600 05122025|BATCH|`REASON`
+   
+- All batch additions should be logged in the system recording what user executed the batch, what was added into the batch, the reason, date, and time.
 
 # Rose Federation Documentation and Commands
 In order to show our Agents what commands are available to users related to Federations, the relevant commands below are broken down into two main sections.  Almost all of the commands that EthosFederationList will send to our bots in Telegram will be from the Owner Commands below.

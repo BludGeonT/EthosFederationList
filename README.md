@@ -157,6 +157,7 @@ Commands:
 ## Example Federation Banlist CSV Data
 This is a snipped of the comma delimited data from the main Federation banlist after an export to show examples of the data that will be put into the database.  Remember that this only shows 5 fields of information but we specified 6 earlier in this document to be created in the Database.  The 6th will add a field containing the Federation Hash (fedhash).
 
+```
 8023555835,Kim,,,eat shit
 5507699310,Eva,Adore,,hi spammer
 7806939524,Gordi,,,spammer
@@ -182,3 +183,4 @@ This is a snipped of the comma delimited data from the main Federation banlist a
 2042188003,LT.DIRECTOR STAFF,-DE OPPERSSO LIBERE-,deopperssolibere,04252025|SPAM|BOTLEVEL:2|CHANNEL:  SPARTIALHUB FOR PATRIOTS
 1217008361,Ragupathi,K,,05092025|SPAM|BOTLEVEL:1|REASON: royal cash crypto scammers
 7816160405,Joanne M Mitchell,,,05092025|IMPERSONATOR|BOTLEVEL:3|hi spammer
+```

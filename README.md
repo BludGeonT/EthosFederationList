@@ -112,11 +112,11 @@ Our (botapi) API bot will then already be idling (always listening) in our Comma
 - Example: 
   - We have 5 IDs to batch add (6005000000, 5023400000, 5567852300, 5023783700, 2000300600)
   - The API Bot (botapi) would issue five separate commands with a 2 second delay in between each ID, example:
-    - /fban 6005000000 05122025|BATCH|`REASON`
-    - /fban 5023400000 05122025|BATCH|`REASON`
-    - /fban 5567852300 05122025|BATCH|`REASON`
-    - /fban 5023783700 05122025|BATCH|`REASON`
-    - /fban 2000300600 05122025|BATCH|`REASON`
+    - `/fban 6005000000 05122025|BATCH|REASON`
+    - `/fban 5023400000 05122025|BATCH|REASON`
+    - `/fban 5567852300 05122025|BATCH|REASON`
+    - `/fban 5023783700 05122025|BATCH|REASON`
+    - `/fban 2000300600 05122025|BATCH|REASON`
       - Notice the space delimiter and notice the 3rd field.  The third field will be constructed of the date followed by a | symbol, the word BATCH followed by a | symbol, and then the `REASON` that the user typed in on the batch creation dialog (or the reason they selected from canned reasons).
    
 - All batch additions should be logged in the system recording auditlog with what user executed the batch, what was added into the batch, the reason, date, and time.
@@ -129,32 +129,32 @@ In order to show our Agents what commands are available to users related to Fede
 These are the list of available fed owner commands. To run these, you have to own the current federation.
 
 Owner Commands:
-- /newfed <fedname>: Creates a new federation with the given name. Only one federation per user.
-- /renamefed <fedname>: Rename your federation.
-- /delfed: Deletes your federation, and any information related to it. Will not unban any banned users.
-- /fedtransfer <reply/username/mention/userid>: Transfer your federation to another user.
-- /fedpromote: Promote a user to fedadmin in your fed. To avoid unwanted fedadmin, the user will get a message to confirm this.
-- /feddemote: Demote a federation admin in your fed.
-- /fednotif <yes/no/on/off>: Whether or not to receive PM notifications of every fed action.
-- /fedreason <yes/no/on/off>: Whether or not fedbans should require a reason.
-- /subfed <FedId>: Subscribe your federation to another. Users banned in the subscribed fed will also be banned in this one.
+- `/newfed <fedname>`: Creates a new federation with the given name. Only one federation per user.
+- `/renamefed <fedname>`: Rename your federation.
+- `/delfed`: Deletes your federation, and any information related to it. Will not unban any banned users.
+- `/fedtransfer <reply/username/mention/userid>`: Transfer your federation to another user.
+- `/fedpromote`: Promote a user to fedadmin in your fed. To avoid unwanted fedadmin, the user will get a message to confirm this.
+- `/feddemote`: Demote a federation admin in your fed.
+- `/fednotif <yes/no/on/off>`: Whether or not to receive PM notifications of every fed action.
+- `/fedreason <yes/no/on/off>`: Whether or not fedbans should require a reason.
+- `/subfed <FedId>`: Subscribe your federation to another. Users banned in the subscribed fed will also be banned in this one.
 Note: This does not affect your banlist. You just inherit any bans.
-- /unsubfed <FedId>: Unsubscribes your federation from another. Bans from the other fed will no longer take effect.
-- /fedexport <csv/minicsv/json/human>: Get the list of currently banned users. Default output is CSV.
-- /fedimport <overwrite/keep> <csv/minicsv/json/human>: Import a list of banned users.
-- /setfedlog: Sets the current chat as the federation log. All federation events will be logged here.
-- /unsetfedlog: Unset the federation log. Events will no longer be logged.
-- /setfedlang: Change the language of the federation log. Note: This does not change the language of Rose's replies to fed commands, only the log channel.
+- `/unsubfed <FedId>`: Unsubscribes your federation from another. Bans from the other fed will no longer take effect.
+- `/fedexport <csv/minicsv/json/human>`: Get the list of currently banned users. Default output is CSV.
+- `/fedimport <overwrite/keep> <csv/minicsv/json/human>`: Import a list of banned users.
+- `/setfedlog`: Sets the current chat as the federation log. All federation events will be logged here.
+- `/unsetfedlog`: Unset the federation log. Events will no longer be logged.
+- `/setfedlang`: Change the language of the federation log. Note: This does not change the language of Rose's replies to fed commands, only the log channel.
 
 ### Section 2 - Fed Admin Commands
 
 The following is the list of all fed admin commands. To run these, you have to be a federation admin in the current federation.
 
 Commands:
-- /fban: Bans a user from the current chat's federation
-- /unfban: Unbans a user from the current chat's federation
-- /feddemoteme <fedID>: Demote yourself from a fed.
-- /myfeds: List all feds you are an admin in.
+- `/fban`: Bans a user from the current chat's federation
+- `/unfban`: Unbans a user from the current chat's federation
+- `/feddemoteme <fedID>`: Demote yourself from a fed.
+- `myfeds`: List all feds you are an admin in.
 
 
 ## Example Federation Banlist CSV Data

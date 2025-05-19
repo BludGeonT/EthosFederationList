@@ -154,7 +154,7 @@ Commands:
 - `/fban`: Bans a user from the current chat's federation
 - `/unfban`: Unbans a user from the current chat's federation
 - `/feddemoteme <fedID>`: Demote yourself from a fed.
-- `myfeds`: List all feds you are an admin in.
+- `/myfeds`: List all feds you are an admin in.
 
 
 ## Example Federation Banlist CSV Data
